@@ -1,0 +1,117 @@
+#include <stdio.h> 
+#include <stdlib.h> 
+ 
+#define MAX_SIZE 100 
+ 
+void insertAtEnd(int list[], int *size, int value) { 
+    if (*size < MAX_SIZE) { 
+        list[*size] = value; 
+        (*size)++; 
+    } else { 
+        printf("List is full!\n"); 
+    } 
+} 
+ 
+void display(int list[], int size) { 
+    if (size == 0) { 
+        printf("List is empty.\n"); 
+        return; 
+    } 
+    for (int i = 0; i < size; i++) { 
+        printf("%d -> ", list[i]); 
+    } 
+    printf("NULL\n"); 
+} 
+ 
+void sort(int list[], int size) { 
+    int temp; 
+    for (int i = 0; i < size - 1; i++) { 
+ 
+        for (int j = i + 1; j < size; j++) { 
+            if (list[i] > list[j]) { 
+                temp = list[i]; 
+                list[i] = list[j]; 
+                list[j] = temp; 
+            } 
+        } 
+    } 
+} 
+ 
+void reverse(int list[], int size) { 
+    int temp; 
+    for (int i = 0; i < size / 2; i++) { 
+        temp = list[i]; 
+        list[i] = list[size - i - 1]; 
+        list[size - i - 1] = temp; 
+    } 
+} 
+ 
+void concatenate(int list1[], int *size1, int list2[], int size2) { 
+    for (int i = 0; i < size2; i++) { 
+        list1[*size1] = list2[i]; 
+        (*size1)++; 
+    } 
+} 
+ 
+int main() { 
+    int list1[MAX_SIZE], list2[MAX_SIZE]; 
+    int size1 = 0, size2 = 0; 
+ 
+    int choice, value; 
+ 
+    do { 
+        printf("\nMenu:\n"); 
+        printf("1. Insert at End (List 1)\n"); 
+        printf("2. Insert at End (List 2)\n"); 
+        printf("3. Sort List\n"); 
+        printf("4. Reverse List\n"); 
+        printf("5. Concatenate Lists\n"); 
+        printf("6. Display Lists\n"); 
+        printf("7. Exit\n"); 
+        printf("Enter your choice: "); 
+        scanf("%d", &choice); 
+ 
+        switch (choice) { 
+            case 1: 
+                printf("Enter value to insert at end in List 1: "); 
+                scanf("%d", &value); 
+                insertAtEnd(list1, &size1, value); 
+                break; 
+            case 2: 
+                printf("Enter value to insert at end in List 2: "); 
+                scanf("%d", &value); 
+                insertAtEnd(list2, &size2, value); 
+                break; 
+            case 3: 
+                printf("After Sorting List 1:\n"); 
+                sort(list1, size1); 
+                display(list1, size1); 
+ 
+                printf("After Sorting List 2:\n"); 
+                sort(list2, size2); 
+                display(list2, size2); 
+                break; 
+            case 4: 
+                printf("After Reversing List 1:\n"); 
+                reverse(list1, size1); 
+                display(list1, size1); 
+                break; 
+            case 5: 
+                printf("After Concatenating List 1 and List 2:\n"); 
+                concatenate(list1, &size1, list2, size2); 
+                display(list1, size1); 
+                break; 
+            case 6: 
+                printf("Display List 1:\n"); 
+                display(list1, size1); 
+                printf("Display List 2:\n"); 
+                display(list2, size2); 
+                break; 
+            case 7: 
+                printf("Exiting the program.\n"); 
+                break; 
+            default: 
+                printf("Invalid choice. Please try again.\n"); 
+        } 
+ 
+    } while (choice != 7); 
