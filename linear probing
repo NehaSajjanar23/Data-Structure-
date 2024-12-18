@@ -1,0 +1,93 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define TABLE_SIZE 10
+
+void insert(int h[]) {
+    int key, index, i, hkey;
+
+    printf("\nEnter a value to insert into the hash table: ");
+    scanf("%d", &key);
+
+    hkey = key % TABLE_SIZE;  
+
+
+    for (i = 0; i < TABLE_SIZE; i++) {
+        index = (hkey + i) % TABLE_SIZE;  
+
+        if (h[index] == 0) {  
+            h[index] = key;  
+            break;
+        }
+    }
+
+    if (i < TABLE_SIZE) {
+        printf("Number of probes for %d is %d\n", key, i + 1);
+    } else {
+        printf("\nElement cannot be inserted (hash table is full)\n");
+    }
+}
+
+void search(int h[]) {
+    int key, index, i, hkey;
+
+    printf("\nEnter the value to search: ");
+    scanf("%d", &key);
+
+    hkey = key % TABLE_SIZE;  
+
+  
+    for (i = 0; i < TABLE_SIZE; i++) {
+        index = (hkey + i) % TABLE_SIZE;
+
+        if (h[index] == key) {  
+            printf("Value %d is found at index %d\n", key, index);
+            return;
+        } else if (h[index] == 0) {  
+            break;
+        }
+    }
+
+    printf("\nValue %d is not found\n", key);
+}
+
+
+void display(int h[]) {
+    int i;
+
+    printf("\nElements in the hash table are:\n");
+    for (i = 0; i < TABLE_SIZE; i++) {
+        if (h[i] != 0) {
+            printf("At index %d, value = %d\n", i, h[i]);
+        }
+    }
+}
+
+
+int main() {
+    int opt, i;
+    int h[TABLE_SIZE] = {0};  
+    while (1) {
+        printf("\nPress 1. Insert\t 2. Display\t 3. Search\t 4. Exit\n");
+        scanf("%d", &opt);
+
+        switch (opt) {
+            case 1:
+                insert(h);
+                break;
+            case 2:
+                display(h);
+                break;
+            case 3:
+                search(h);
+                break;
+            case 4:
+                exit(0);
+            default:
+                printf("Invalid option. Please try again.\n");
+        }
+    }
+
+    return 0;
+}
+
